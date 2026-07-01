@@ -27,26 +27,28 @@ From the repo root:
 **Windows (PowerShell):**
 
 ```powershell
-./scripts/init-plugin.ps1 -Name "Booking Reminders" -Description "Sends booking reminder emails."
+./scripts/init-plugin.ps1 -Name "Plugin Name" -Description "A short description of what the plugin does."
 ```
 
 **macOS / Linux (bash):**
 
 ```bash
-./scripts/init-plugin.sh "Booking Reminders"
+./scripts/init-plugin.sh "Plugin Name"
 ```
 
-The script derives everything from the name and replaces the placeholders below
-across every file, then renames `plugin-name.php` to your slug. You can override
-the slug, namespace, author, and URLs with parameters (see the top of each
-script).
+Replace "Plugin Name" with your plugin's real name. The script derives everything
+from it and replaces the placeholders below across every file, then renames
+`plugin-name.php` to your slug. You can override the slug, namespace, author, and
+URLs with parameters (see the top of each script). As a convenience, a name that
+starts with "ShiftWeb" is deduped, so "ShiftWeb Core" gives the namespace
+`ShiftWeb\Core` rather than the redundant `ShiftWeb\ShiftwebCore`.
 
 ### Option 3: Let Claude Code do it
 
 Open the folder in Claude Code and say:
 
-> Initialize this plugin. Name: "Booking Reminders". Description: "Sends booking
-> reminder emails to customers."
+> Initialize this plugin. Name: "Plugin Name". Description: "A short description of
+> what the plugin does."
 
 Claude Code will read `CLAUDE.md`, fill in the placeholders, rename the main
 file, and remove this starter README. Answer its questions as they come up.
@@ -57,15 +59,19 @@ file, and remove this starter README. Answer its questions as they come up.
 
 | Token | Meaning | Example |
 |---|---|---|
-| `{{PLUGIN_NAME}}` | Display name in the plugins list | `Booking Reminders` |
-| `{{PLUGIN_SLUG}}` | Folder, main file, and text domain | `booking-reminders` |
-| `{{PLUGIN_NAMESPACE}}` | PHP namespace root | `ShiftWeb\BookingReminders` |
-| `{{PLUGIN_PREFIX}}` | Function / option prefix (snake_case) | `booking_reminders` |
-| `{{PLUGIN_CONSTANT}}` | Constant prefix (UPPER_CASE) | `BOOKING_REMINDERS` |
-| `{{PLUGIN_DESCRIPTION}}` | One-line description | `Sends booking reminder emails.` |
+| `{{PLUGIN_NAME}}` | Display name in the plugins list | `Plugin Name` |
+| `{{PLUGIN_SLUG}}` | Folder, main file, and text domain | `plugin-name` |
+| `{{PLUGIN_NAMESPACE}}` | PHP namespace root | `ShiftWeb\PluginName` |
+| `{{PLUGIN_PREFIX}}` | Function / option prefix (snake_case) | `plugin_name` |
+| `{{PLUGIN_CONSTANT}}` | Constant prefix (UPPER_CASE) | `PLUGIN_NAME` |
+| `{{PLUGIN_DESCRIPTION}}` | One-line description | `A custom WordPress plugin by ShiftWeb.` |
 | `{{PLUGIN_AUTHOR}}` | Author | `ShiftWeb` |
 | `{{PLUGIN_AUTHOR_URI}}` | Author URL | `https://shiftweb.com` |
 | `{{PLUGIN_URI}}` | Plugin homepage | `https://shiftweb.com` |
+
+Every value is derived from the name. A name that starts with "ShiftWeb" has that
+word dropped before the namespace is built, so "ShiftWeb Core" becomes
+`ShiftWeb\Core` rather than `ShiftWeb\ShiftwebCore`.
 
 ---
 

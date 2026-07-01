@@ -8,7 +8,7 @@
 	plugin file. Everything is derived from -Name unless you override it.
 
 .EXAMPLE
-	./scripts/init-plugin.ps1 -Name "Booking Reminders" -Description "Sends booking reminder emails."
+	./scripts/init-plugin.ps1 -Name "Plugin Name" -Description "A short description of what the plugin does."
 #>
 [CmdletBinding()]
 param(
@@ -28,8 +28,23 @@ if ( -not $Slug ) {
 	$Slug = ($Name.ToLower() -replace '[^a-z0-9]+', '-').Trim('-')
 }
 if ( -not $Namespace ) {
-	$studly = ((Get-Culture).TextInfo.ToTitleCase(($Slug -replace '-', ' '))) -replace ' ', ''
-	$Namespace = "ShiftWeb\$studly"
+	# Build the namespace from the slug's words. Drop a leading "shiftweb" word so
+	# a ShiftWeb-prefixed name gives ShiftWeb\Core, not the redundant
+	# ShiftWeb\ShiftwebCore. Whole-word match, so "ShiftWebby" is left alone.
+	$words = @( $Slug -split '-' | Where-Object { $_ -ne '' } )
+	if ( $words.Count -gt 0 -and $words[0].ToLower() -eq 'shiftweb' ) {
+		if ( $words.Count -gt 1 ) {
+			$words = $words[1..($words.Count - 1)]
+		} else {
+			$words = @()
+		}
+	}
+	$studly = ( $words | ForEach-Object { (Get-Culture).TextInfo.ToTitleCase($_) } ) -join ''
+	if ( $studly ) {
+		$Namespace = "ShiftWeb\$studly"
+	} else {
+		$Namespace = 'ShiftWeb'
+	}
 }
 
 $prefix        = $Slug -replace '-', '_'

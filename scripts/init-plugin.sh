@@ -24,8 +24,20 @@ if [ -z "$SLUG" ]; then
 	SLUG="$(printf '%s' "$NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//')"
 fi
 if [ -z "$NS" ]; then
-	STUDLY="$(printf '%s' "$SLUG" | sed -E 's/(^|-)([a-z])/\U\2/g')"
-	NS="ShiftWeb\\${STUDLY}"
+	# Drop a leading "shiftweb" word so a ShiftWeb-prefixed name gives
+	# ShiftWeb\Core, not the redundant ShiftWeb\ShiftwebCore. Whole-word match,
+	# so "shiftwebby-thing" is left alone.
+	REST="$SLUG"
+	case "$SLUG" in
+		shiftweb) REST="" ;;
+		shiftweb-*) REST="${SLUG#shiftweb-}" ;;
+	esac
+	if [ -n "$REST" ]; then
+		STUDLY="$(printf '%s' "$REST" | sed -E 's/(^|-)([a-z])/\U\2/g')"
+		NS="ShiftWeb\\${STUDLY}"
+	else
+		NS="ShiftWeb"
+	fi
 fi
 
 PREFIX="$(printf '%s' "$SLUG" | tr '-' '_')"
