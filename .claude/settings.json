@@ -1,0 +1,15 @@
+{
+	"permissions": {
+		"deny": [
+			"Read(./.env)",
+			"Read(./.env.*)",
+			"Read(./*.key)",
+			"Read(./**/*.key)",
+			"Read(./*.pem)",
+			"Read(./**/*.pem)",
+			"Read(./*.p12)",
+			"Read(./*.pfx)",
+			"Read(./secrets/**)"
+		]
+	}
+}

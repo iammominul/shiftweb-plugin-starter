@@ -1,0 +1,31 @@
+# .claudeignore - best-effort hint to keep bulky, low-value files out of Claude
+# Code's automatic context, so it spends fewer tokens.
+#
+# This is NOT a security boundary. Support for .claudeignore is inconsistent, and
+# Claude can still read these files if pointed straight at them. Secrets are
+# blocked for real by the Read() deny rules in .claude/settings.json, and kept
+# out of the repo by .gitignore. Do not rely on this file to protect anything.
+
+# Dependencies and build output (large, rarely useful to read)
+vendor/
+node_modules/
+build/
+dist/
+*.zip
+*.tar.gz
+
+# Lock files (large, no reason to read)
+composer.lock
+package-lock.json
+yarn.lock
+
+# Test caches, coverage, logs
+.phpunit.result.cache
+.phpunit.cache/
+coverage/
+*.log
+
+# Local WordPress / MainWP test installs (a whole CMS, irrelevant to read)
+wp/
+wordpress/
+.wp-env/

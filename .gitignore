@@ -10,14 +10,26 @@
 
 # Tooling caches
 /.phpunit.result.cache
+.phpunit.cache/
 /phpstan.neon
 .phpstan.cache/
+/coverage/
 
-# Environment and secrets
+# Local WordPress / test installs
+/wp/
+/wordpress/
+/.wp-env/
+
+# Environment and secrets (never commit these)
+# Scoped to key/cert extensions and a dedicated secrets/ folder so real source
+# files (for example license-key-validator.php) are never caught by accident.
 .env
 .env.*
 *.key
 *.pem
+*.p12
+*.pfx
+/secrets/
 
 # Logs and OS cruft
 *.log
