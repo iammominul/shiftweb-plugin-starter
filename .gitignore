@@ -1,0 +1,24 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Build artifacts
+/build/
+/dist/
+*.zip
+
+# Environment and secrets
+.env
+.env.*
+*.key
+*.pem
+
+# Logs and OS cruft
+*.log
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+*.sublime-*
