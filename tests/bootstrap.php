@@ -2,9 +2,10 @@
 /**
  * PHPUnit bootstrap.
  *
- * These are plain unit tests that do not load WordPress. For tests that need
- * WordPress functions, add the WP test suite or a mocking library (for example
- * Brain Monkey) and wire it up here.
+ * Plain, WordPress-free unit tests. WordPress functions are mocked per test with
+ * Brain Monkey via the {{PLUGIN_NAMESPACE}}\Tests\TestCase base class. For tests
+ * that need real hook or database behavior, add the WordPress integration test
+ * suite and wire it up here.
  *
  * @package {{PLUGIN_NAMESPACE}}
  */

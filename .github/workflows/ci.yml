@@ -14,20 +14,36 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The starter template still holds {{PLACEHOLDER}} tokens, so it cannot be
+      # built until the init script runs. Skip the build here, but run the full
+      # pipeline in any plugin generated from this template.
+      - name: Detect uninitialized template
+        id: template
+        run: |
+          if grep -qE '\{\{[A-Z]' composer.json; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Starter template is not initialized yet; skipping build, lint, analyze, and tests."
+          fi
+
       - name: Set up PHP
+        if: steps.template.outputs.skip != 'true'
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           coverage: none
 
       - name: Install dependencies
+        if: steps.template.outputs.skip != 'true'
         run: composer install --no-interaction --prefer-dist
 
       - name: Lint (PHPCS)
+        if: steps.template.outputs.skip != 'true'
         run: composer lint
 
       - name: Analyze (PHPStan)
+        if: steps.template.outputs.skip != 'true'
         run: composer analyze
 
       - name: Test (PHPUnit)
+        if: steps.template.outputs.skip != 'true'
         run: composer test

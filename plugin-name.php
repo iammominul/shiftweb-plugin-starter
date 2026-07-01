@@ -30,9 +30,9 @@ define( '{{PLUGIN_CONSTANT}}_DIR', plugin_dir_path( __FILE__ ) );
 define( '{{PLUGIN_CONSTANT}}_URL', plugin_dir_url( __FILE__ ) );
 
 // Composer autoloader. Run "composer install" after setup.
-$autoloader = {{PLUGIN_CONSTANT}}_DIR . 'vendor/autoload.php';
-if ( is_readable( $autoloader ) ) {
-	require $autoloader;
+${{PLUGIN_PREFIX}}_autoloader = {{PLUGIN_CONSTANT}}_DIR . 'vendor/autoload.php';
+if ( is_readable( ${{PLUGIN_PREFIX}}_autoloader ) ) {
+	require ${{PLUGIN_PREFIX}}_autoloader;
 }
 
 register_activation_hook( __FILE__, array( '{{PLUGIN_NAMESPACE}}\Activator', 'activate' ) );

@@ -85,6 +85,30 @@ build anything.
 
 ---
 
+## Packaging a release
+
+When a plugin is ready to install on a site, build a clean zip:
+
+**Windows (PowerShell):**
+
+```powershell
+./scripts/build-zip.ps1
+```
+
+**macOS / Linux (bash):**
+
+```bash
+./scripts/build-zip.sh
+```
+
+The script stages a copy, installs runtime-only dependencies with the optimized
+autoloader, strips development files (tests, scripts, CI config, tooling config,
+and this README), and writes `dist/<slug>-<version>.zip` with the slug as the
+top-level folder. Upload it via Plugins > Add New > Upload Plugin. Run
+`composer check` first so you never ship a failing build.
+
+---
+
 ## What is in the box
 
 ```
@@ -102,7 +126,8 @@ build anything.
 ├── assets/                # CSS / JS (enqueued only where needed)
 ├── languages/             # Translation files
 ├── tests/                 # PHPUnit
-├── scripts/               # init-plugin scripts
+├── scripts/               # init-plugin and build-zip scripts
+├── dist/                  # Built release zips land here (git-ignored)
 └── .github/workflows/     # CI: lint + analyze + tests
 ```
 

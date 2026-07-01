@@ -2,10 +2,16 @@
 /vendor/
 /node_modules/
 
-# Build artifacts
+# Build artifacts (keep the dist folder, ignore the zips inside it)
 /build/
-/dist/
+/dist/*
+!/dist/.gitkeep
 *.zip
+
+# Tooling caches
+/.phpunit.result.cache
+/phpstan.neon
+.phpstan.cache/
 
 # Environment and secrets
 .env
@@ -22,3 +28,6 @@ Thumbs.db
 .idea/
 .vscode/
 *.sublime-*
+
+# Personal Claude Code settings (shared settings.json can still be committed)
+.claude/settings.local.json

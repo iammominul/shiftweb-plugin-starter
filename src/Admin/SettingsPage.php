@@ -20,8 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 final class SettingsPage {
 
-	private const OPTION      = '{{PLUGIN_PREFIX}}_settings';
-	private const PAGE_SLUG   = '{{PLUGIN_SLUG}}';
+	private const OPTION       = '{{PLUGIN_PREFIX}}_settings';
+	private const PAGE_SLUG    = '{{PLUGIN_SLUG}}';
 	private const OPTION_GROUP = '{{PLUGIN_PREFIX}}_group';
 
 	/**

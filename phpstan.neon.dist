@@ -5,4 +5,8 @@ parameters:
   level: 5
   paths:
     - src
+  scanFiles:
+    # Lets PHPStan see the {{PLUGIN_CONSTANT}}_* constants the main file defines,
+    # without executing it. Renamed to <slug>.php by the init script.
+    - {{PLUGIN_SLUG}}.php
   # Raise the level over time (max is 9) as the codebase tightens up.

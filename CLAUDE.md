@@ -26,11 +26,11 @@ sites), ask. Do not guess past an unclear requirement.
 
 - **Correct**, including edge cases and failure paths, not just the happy path.
 - **Secure** by default (see section 5).
-- **Tested** where the logic is non-trivial or security-critical (see section 8).
+- **Tested** where the logic is non-trivial or security-critical (see section 9).
 - **Fast** on a real site with real data volume (see section 6).
 - **Clean**: readable, small, and consistent with the surrounding code.
 
-A change is only "done" when it passes the checklist in section 10.
+A change is only "done" when it passes the checklist in section 11.
 
 ---
 
@@ -171,7 +171,39 @@ Treat "would this diff pass a security review?" as a gate on every change.
 
 ---
 
-## 7. Internationalization and accessibility
+## 7. Database discipline (do not bloat the site)
+
+The plugin shares one database with the whole site, and on ShiftWeb sites those
+tables are already large. Treat schema and row growth as a cost you own.
+
+- **Store data in the right place.** Site config in options, per-entity data in
+  post or user meta, large or queryable datasets in a purpose-built custom table.
+  Do not push everything into `wp_options`.
+- **Guard the autoload cache.** Autoloaded options load on every single request.
+  Keep them small and set `autoload = 'no'` for anything large or rarely read.
+  Never grow one option unboundedly (no logs, event streams, or ever-expanding
+  arrays in a single row).
+- **Do not accumulate.** Anything you create, you clean up: expire transients,
+  delete rows you no longer need, and schedule a cron job to prune log, cache, or
+  time-series data so a table cannot grow without limit.
+- **Custom tables, only when justified**: create and migrate with `dbDelta()`,
+  version the schema, add an index on every column you filter, join, or sort by,
+  choose the narrowest correct column types, and drop the table in
+  `uninstall.php`.
+- **Meta scales poorly for querying.** Do not build features around large
+  `meta_query` lookups. If you must query data at scale, model it in a custom
+  table with real indexes. Never store a serialized blob you later need to search.
+- **Write sparingly on the front end.** Do not INSERT or UPDATE synchronously on
+  every page view (for example a hit counter). Batch it, defer to cron, or buffer
+  in the object cache and flush periodically.
+- **Remove orphans.** When a parent entity is deleted, delete its related meta and
+  rows too (hook `before_delete_post`, `deleted_user`, and so on).
+- **Every custom query uses `$wpdb->prepare()`** (see section 5) and reads through
+  a cache where it is hot.
+
+---
+
+## 8. Internationalization and accessibility
 
 - **Every user-facing string** is wrapped in a translation function
   (`__()`, `esc_html__()`, `esc_attr_e()`, and so on) with the `{{TEXT_DOMAIN}}`
@@ -184,7 +216,7 @@ Treat "would this diff pass a security review?" as a gate on every change.
 
 ---
 
-## 8. Testing
+## 9. Testing
 
 - **PHPUnit for logic.** Write the test first for anything security-critical
   (auth, token handling, sanitization, capability gating) and for every bug fix
@@ -200,7 +232,7 @@ Treat "would this diff pass a security review?" as a gate on every change.
 
 ---
 
-## 9. Documentation and error handling
+## 10. Documentation and error handling
 
 - **DocBlocks** on classes and public methods: purpose, `@param`, `@return`,
   `@throws`. Explain the "why", not the obvious "what".
@@ -214,7 +246,7 @@ Treat "would this diff pass a security review?" as a gate on every change.
 
 ---
 
-## 10. Definition of done
+## 11. Definition of done
 
 A change is done only when all of these are true:
 
@@ -231,7 +263,7 @@ A change is done only when all of these are true:
 
 ---
 
-## 11. Writing style (house rule)
+## 12. Writing style (house rule)
 
 Do not use em dashes or en dashes in any user-facing copy: plugin headers, admin
 notices, settings labels, help text, `readme.txt`, or commit messages. They read
@@ -240,7 +272,7 @@ sentences instead.
 
 ---
 
-## 12. Commands
+## 13. Commands
 
 ```bash
 composer install     # install dependencies

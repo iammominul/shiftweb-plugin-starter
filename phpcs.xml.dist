@@ -19,6 +19,12 @@
 	<rule ref="WordPress"/>
 	<rule ref="PHPCompatibilityWP"/>
 
+	<!-- src/ uses PSR-4 StudlyCase class files (Plugin.php), not the WordPress
+	     core class-*.php convention. Keep the filename rules everywhere else. -->
+	<rule ref="WordPress.Files.FileName">
+		<exclude-pattern>src/*</exclude-pattern>
+	</rule>
+
 	<!-- Enforce our prefixes and text domain. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
