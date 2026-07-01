@@ -22,7 +22,7 @@ Developer(s):
 
 - Which site(s) does it run on? One site, several, or multisite?
 - Production only, or staging first?
-- How is it deployed and updated: MainWP, manual upload, or git?
+- How is it deployed and updated: manual upload or git?
 
 ## 3. Behavior
 

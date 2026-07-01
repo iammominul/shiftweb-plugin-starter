@@ -25,7 +25,7 @@ yarn.lock
 coverage/
 *.log
 
-# Local WordPress / MainWP test installs (a whole CMS, irrelevant to read)
+# Local WordPress test installs (a whole CMS, irrelevant to read)
 wp/
 wordpress/
 .wp-env/
