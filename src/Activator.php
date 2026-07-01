@@ -5,6 +5,8 @@
  * @package {{PLUGIN_NAMESPACE}}
  */
 
+declare(strict_types=1);
+
 namespace {{PLUGIN_NAMESPACE}};
 
 if ( ! defined( 'ABSPATH' ) ) {

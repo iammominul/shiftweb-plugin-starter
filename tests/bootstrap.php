@@ -9,6 +9,8 @@
  * @package {{PLUGIN_NAMESPACE}}
  */
 
+declare(strict_types=1);
+
 $autoloader = dirname( __DIR__ ) . '/vendor/autoload.php';
 
 if ( ! is_readable( $autoloader ) ) {

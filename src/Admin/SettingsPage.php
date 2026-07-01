@@ -7,6 +7,8 @@
  * @package {{PLUGIN_NAMESPACE}}
  */
 
+declare(strict_types=1);
+
 namespace {{PLUGIN_NAMESPACE}}\Admin;
 
 if ( ! defined( 'ABSPATH' ) ) {

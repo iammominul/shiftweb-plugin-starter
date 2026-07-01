@@ -26,5 +26,8 @@ jobs:
       - name: Lint (PHPCS)
         run: composer lint
 
+      - name: Analyze (PHPStan)
+        run: composer analyze
+
       - name: Test (PHPUnit)
         run: composer test

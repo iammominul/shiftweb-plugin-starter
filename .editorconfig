@@ -10,6 +10,6 @@ indent_style = tab
 [*.md]
 trim_trailing_whitespace = false
 
-[*.{yml,yaml,json}]
+[*.{yml,yaml,json,neon}]
 indent_style = space
 indent_size = 2

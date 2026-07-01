@@ -17,6 +17,8 @@
  * @package {{PLUGIN_NAMESPACE}}
  */
 
+declare(strict_types=1);
+
 // No direct file access.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

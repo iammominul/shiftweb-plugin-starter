@@ -72,10 +72,12 @@ file, and remove this starter README. Answer its questions as they come up.
 ## First-time setup after init
 
 ```bash
-composer install     # install dev tooling (PHPCS, PHPUnit)
+composer install     # install dev tooling (PHPCS, PHPStan, PHPUnit)
 composer lint        # check WordPress Coding Standards
 composer lint:fix    # auto-fix what it can
+composer analyze     # PHPStan static analysis
 composer test        # run PHPUnit
+composer check       # lint + analyze + test (run before every PR)
 ```
 
 Then read `CLAUDE.md` and fill out `INTAKE.md` with the project brief before you
@@ -87,18 +89,30 @@ build anything.
 
 ```
 .
-├── CLAUDE.md              # Rules for Claude Code on this plugin
+├── CLAUDE.md              # Engineering rules for Claude Code on this plugin
 ├── INTAKE.md              # Project brief to fill out with the requester
 ├── plugin-name.php        # Plugin bootstrap (renamed on init)
 ├── uninstall.php          # Clean removal
 ├── readme.txt             # WordPress-style readme / changelog
 ├── composer.json          # Autoloading + dev tooling
 ├── phpcs.xml.dist         # WordPress Coding Standards ruleset
+├── phpstan.neon.dist      # Static analysis config
 ├── phpunit.xml.dist       # Test config
 ├── src/                   # Namespaced OO classes (PSR-4)
 ├── assets/                # CSS / JS (enqueued only where needed)
 ├── languages/             # Translation files
 ├── tests/                 # PHPUnit
 ├── scripts/               # init-plugin scripts
-└── .github/workflows/     # CI: lint + tests
+└── .github/workflows/     # CI: lint + analyze + tests
 ```
+
+## The rules (CLAUDE.md)
+
+`CLAUDE.md` is the heart of this starter. It is a full engineering contract that
+tells Claude Code how to write the code: clean architecture and strict types,
+WordPress API best practices, a non-negotiable security model (validate,
+sanitize, escape, nonces, capabilities, prepared statements), performance rules
+(no N+1, cache expensive work, conditional asset loading), a testing policy
+(test-first for security-critical logic), and a hard definition of done that
+every change must pass. Read it before building, and keep it in every plugin you
+generate from this starter.

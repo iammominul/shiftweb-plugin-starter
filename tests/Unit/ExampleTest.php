@@ -6,6 +6,8 @@
  * @package {{PLUGIN_NAMESPACE}}
  */
 
+declare(strict_types=1);
+
 namespace {{PLUGIN_NAMESPACE}}\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
